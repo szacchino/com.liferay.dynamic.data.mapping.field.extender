@@ -113,6 +113,9 @@ public interface FieldExtenderDDMFormFieldTypeSettings extends DDMFormFieldTypeS
 	@DDMFormField(label = "%restUrl")
 	public String restUrl();
 
+	@DDMFormField(label = "%usstyle")
+	public String usstyle();
+
 	@DDMFormField(label = "%restKey")
 	public String restKey();
 

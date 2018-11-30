@@ -1364,8 +1364,8 @@ AUI.add(
 					},
 
 					style: {
-						value: STR_BLANK
-					}
+                        value: STR_BLANK
+                    }
 				},
 
 				EXTENDS: A.FormBuilderField,
@@ -1382,7 +1382,8 @@ AUI.add(
 					getPropertyModel: function() {
 						var instance = this;
 
-						var model = DDMSeparatorField.superclass.getPropertyModel.apply(instance, arguments);
+                        var model = 
+                        
 
 						model.push(
 							{
@@ -1517,20 +1518,20 @@ AUI.add(
 			{
 				ATTRS: {
 					restUrl: {
-						value: 'http://localhost:8080/api/jsonws'
+						value: 'http://localhost:8080/api/jsonws/country/get-countries'
 					},
 					restKey: {
-						value: ''
+						value: 'name'
 					},
 					restValue: {
-						value: ''
+						value: 'a3'
 					},
 					dataType: {
 						value: 'string'
 					},
 					fieldNamespace: {
 						value: 'ddm'
-					}
+                    },
 				},
 
 				EXTENDS: FormBuilderTextField,
@@ -1562,10 +1563,192 @@ AUI.add(
 									attributeName: 'restValue',
 									editor: new A.TextCellEditor(),
 									name: 'Option value mapping'
-								}
+                                },
+								// {
+								// 	attributeName: 'repeatable',
+								// 	editor: new A.RadioCellEditor( {
+								// 			options: {
+                                //                 'false': Liferay.Language.get('no'),
+                                //                 'true': Liferay.Language.get('yes')
+                                //             }
+								// 		} ),
+								// 	formatter: function(val) {
+                                //         var booleanOptions = {
+                                //             'false': Liferay.Language.get('no'),
+                                //             'true': Liferay.Language.get('yes')
+                                //         };
+								// 		return booleanOptions[val.data.value];
+								// 	},
+								// 	name: Liferay.Language.get('repeatable')
+			                    // }
 							]
 						);
 					}
+				}
+			}
+		);
+		
+		var DDMUsDivField = A.Component.create(
+			{
+				ATTRS: {
+                    // il datatype undefined consente di non avere caselle di
+                    // input nell'ftl
+					dataType: {
+						value: undefined
+                    },
+                    
+					fieldNamespace: {
+						value: 'ddm'
+                    },
+                    
+                    showLabel: {
+                        readOnly: true,
+                        value: false
+					},
+                    
+                    style: {
+						value: 'background-color:#00b900;'
+					},
+                    
+                    usstyle: {
+						value: 'background-color:#cecece;'
+					}
+				},
+
+				EXTENDS: FormBuilderTextField,
+				
+				NAME: 'ddm-us-div',
+
+				// UI_ATTRS: ['style'],
+				
+				prototype: {
+                    getHTML: function() {
+                        var instance = this;
+                        return '<div class="" style="' 
+                        + instance.get('usstyle') + '"><h1>' 
+                        + instance.get('label') + '</h1><p>' 
+                        + instance.get('tip') + '</p></div>';
+					},
+					getPropertyModel: function() {
+						var instance = this;
+
+						var model = originalGetPropertyModel.call(instance);
+                        console.debug(model);
+						// return model.concat(
+						// 	[
+                        //         {
+                        //             attributeName: 'style',
+                        //             editor: new A.TextAreaCellEditor(),
+                        //             name: Liferay.Language.get('style')
+                        //         },
+						// 		{
+						// 			attributeName: 'usstyle',
+						// 			editor: new A.TextAreaCellEditor(),
+						// 			name: Liferay.Language.get('usstyle')
+						// 		},
+						// 		// {
+						// 		// 	attributeName: 'repeatable',
+						// 		// 	editor: new A.RadioCellEditor( {
+						// 		// 			options: {
+                        //         //                 'false': Liferay.Language.get('no'),
+                        //         //                 'true': Liferay.Language.get('yes')
+                        //         //             }
+						// 		// 		} ),
+						// 		// 	formatter: function(val) {
+                        //         //         var booleanOptions = {
+                        //         //             'false': Liferay.Language.get('no'),
+                        //         //             'true': Liferay.Language.get('yes')
+                        //         //         };
+						// 		// 		return booleanOptions[val.data.value];
+						// 		// 	},
+						// 		// 	name: Liferay.Language.get('repeatable')
+			            //         // }
+						// 	]
+                        // );
+                        return [
+							{
+								attributeName: 'name',
+								editor: new A.TextCellEditor(),
+								name: Liferay.Language.get('type')
+                            },
+                            {
+								attributeName: 'type',
+								editor: false,
+								name: Liferay.Language.get('type')
+							},
+							{
+								attributeName: 'label',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('text')
+							},
+							{
+								attributeName: 'style',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('style')
+                            }
+                            ,
+							{
+								attributeName: 'usstyle',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('usstyle')
+							},
+							{
+								attributeName: 'tip',
+								editor: new A.TextCellEditor(),
+								name: Liferay.Language.get('tip')
+                            },
+                            {
+                                attributeName: 'repeatable',
+                                editor: new A.RadioCellEditor( {
+                                        options: {
+                                            'false': Liferay.Language.get('no'),
+                                            'true': Liferay.Language.get('yes')
+                                        }
+                                    } ),
+                                formatter: function(val) {
+                                    var booleanOptions = {
+                                        'false': Liferay.Language.get('no'),
+                                        'true': Liferay.Language.get('yes')
+                                    };
+                                    return booleanOptions[val.data.value];
+                                },
+                                name: Liferay.Language.get('repeatable')
+                            }
+						];
+					},
+					// _uiSetStyle: function(val) {
+					// 	var instance = this;
+
+					// 	var templateNode = instance.get('templateNode');
+					// 	applyStyles(templateNode, val);
+					// }
+
+					// _uiSetLabel: function(val) {
+					// 	var instance = this;
+					// 	console.log('_uiSetLabel');
+					// 	console.log('val: ' + val);
+					// 	var templateNode = instance.get('templateNode');
+					// 	if (templateNode) {
+					// 		console.log('template node: ' + templateNode);
+					// 		templateNode.setContent(val);
+					// 	} else {
+					// 		console.log('templatenode is null');
+					// 	}
+					// },
+					
+					// _uiSetUsstyle: function(val) {
+					// 	var instance = this;
+					// 	console.log('_uiSetUsstyle');
+						
+					// 	console.log('val: ' + val);
+					// 	var templateNode = instance.get('templateNode');
+					// 	if (templateNode) {
+					// 		console.log('template node: ' + templateNode);
+					// 		applyStyles(templateNode, val);
+					// 	} else {
+					// 		console.log('templatenode is null');
+					// 	}
+					// }
 				}
 			}
 		);
@@ -1585,7 +1768,8 @@ AUI.add(
 			DDMHTMLTextField,
 			DDMTextAreaField,
 			//TODO add field object to this list
-			DDMRestSelectField
+			DDMRestSelectField,
+			DDMUsDivField
 		];
 
 		plugins.forEach(

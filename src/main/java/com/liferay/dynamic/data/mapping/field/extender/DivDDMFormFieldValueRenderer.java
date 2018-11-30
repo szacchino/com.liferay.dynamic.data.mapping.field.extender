@@ -17,12 +17,12 @@ import org.osgi.service.component.annotations.Component;
  * If that fails or if the screen name is null or empty,
  */
 @Component(immediate = true, service = DDMFormFieldValueRenderer.class)
-public class RestSelectDDMFormFieldValueRenderer extends BaseDDMFormFieldValueRenderer {
+public class DivDDMFormFieldValueRenderer extends BaseDDMFormFieldValueRenderer {
 
 	protected ValueAccessor getValueAcessor(Locale locale) {
 		return new ValueAccessor(locale) {
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
-				_log.info("RestSelectDDMFormFieldValueRenderer: " + ddmFormFieldValue.getDDMFormField().getType());
+				_log.info("DivDDMFormFieldValueRenderer: " + ddmFormFieldValue.getDDMFormField().getType());
 				if ("ddm-us-div".equals(ddmFormFieldValue.getDDMFormField().getType())) {
 					return "";
 				}
@@ -32,7 +32,7 @@ public class RestSelectDDMFormFieldValueRenderer extends BaseDDMFormFieldValueRe
 	}
 
 	public String getSupportedDDMFormFieldType() {
-		return "ddm-rest-select";
+		return "ddm-us-div";
 	}
 
 	private Log _log = LogFactoryUtil.getLog(DivDDMFormFieldValueRenderer.class);

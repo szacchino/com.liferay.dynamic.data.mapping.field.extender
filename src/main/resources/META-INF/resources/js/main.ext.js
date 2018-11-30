@@ -232,7 +232,10 @@ AUI.add(
 				UNIQUE_FIELD_NAMES_MAP: new A.Map(),
 
 				//TODO add new field attributes to this list
-				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'restUrl', 'restKey', 'restValue'],
+				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'restUrl', 'restKey', 'restValue'
+				//zac
+				,'usstyle'
+			],
 
 				prototype: {
 					initializer: function() {
@@ -899,6 +902,12 @@ AUI.add(
 					iconClass: 'icon-fb-select',
 					label: 'REST Select',
 					type: 'ddm-rest-select'
+				},
+				{
+					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
+					iconClass: 'icon-fb-text',
+					label: 'US Div',
+					type: 'ddm-us-div'
 				}
 			],
 

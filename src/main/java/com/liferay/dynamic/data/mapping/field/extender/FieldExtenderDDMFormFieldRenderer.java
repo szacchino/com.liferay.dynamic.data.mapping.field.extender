@@ -94,8 +94,11 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		fieldContext.put("required", Boolean.toString(ddmFormField.isRequired()));
 		fieldContext.put("showLabel", Boolean.toString(ddmFormField.isShowLabel()));
 		fieldContext.put("type", ddmFormField.getType());
-
+		
 		//TODO add additional field attributes
+		//zac
+		fieldContext.put("usstyle", ddmFormField.getProperty("usstyle"));
+		
 		fieldContext.put("restUrl", ddmFormField.getProperty("restUrl"));
 		fieldContext.put("restKey", ddmFormField.getProperty("restKey"));
 		fieldContext.put("restValue", ddmFormField.getProperty("restValue"));
@@ -476,7 +479,7 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 	private static final String _DEFAULT_READ_ONLY_NAMESPACE = "readonly";
 
 	//TODO add custom field types to this list
-	private static final String[] _SUPPORTED_DDM_FORM_FIELD_TYPES = { "ddm-rest-select" };
+	private static final String[] _SUPPORTED_DDM_FORM_FIELD_TYPES = { "ddm-rest-select", "ddm-us-div" };
 
 	private static final String _TPL_EXT = ".ftl";
 
