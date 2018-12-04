@@ -35,5 +35,5 @@ public class RestSelectDDMFormFieldValueRenderer extends BaseDDMFormFieldValueRe
 		return "ddm-rest-select";
 	}
 
-	private Log _log = LogFactoryUtil.getLog(DivDDMFormFieldValueRenderer.class);
+	private Log _log = LogFactoryUtil.getLog(RestSelectDDMFormFieldValueRenderer.class);
 }

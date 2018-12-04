@@ -1564,23 +1564,6 @@ AUI.add(
 									editor: new A.TextCellEditor(),
 									name: 'Option value mapping'
                                 },
-								// {
-								// 	attributeName: 'repeatable',
-								// 	editor: new A.RadioCellEditor( {
-								// 			options: {
-                                //                 'false': Liferay.Language.get('no'),
-                                //                 'true': Liferay.Language.get('yes')
-                                //             }
-								// 		} ),
-								// 	formatter: function(val) {
-                                //         var booleanOptions = {
-                                //             'false': Liferay.Language.get('no'),
-                                //             'true': Liferay.Language.get('yes')
-                                //         };
-								// 		return booleanOptions[val.data.value];
-								// 	},
-								// 	name: Liferay.Language.get('repeatable')
-			                    // }
 							]
 						);
 					}
@@ -1601,17 +1584,12 @@ AUI.add(
 						value: 'ddm'
                     },
                     
-                    showLabel: {
-                        readOnly: true,
-                        value: false
-					},
-                    
                     style: {
-						value: 'background-color:#00b900;'
+						value: STR_BLANK
 					},
-                    
+
                     usstyle: {
-						value: 'background-color:#cecece;'
+						value: 'background-color:#cecece'
 					}
 				},
 
@@ -1619,57 +1597,27 @@ AUI.add(
 				
 				NAME: 'ddm-us-div',
 
-				// UI_ATTRS: ['style'],
+				UI_ATTRS: ['usstyle', 'label', 'tip'],
 				
 				prototype: {
                     getHTML: function() {
-                        var instance = this;
-                        return '<div class="" style="' 
-                        + instance.get('usstyle') + '"><h1>' 
-                        + instance.get('label') + '</h1><p>' 
-                        + instance.get('tip') + '</p></div>';
+						var instance = this;
+						var templateNode = instance.get('templateNode');
+						if (templateNode && templateNode._node && templateNode._node.parentElement && templateNode._node.parentElement.parentElement) {
+							var style = instance.get('usstyle');
+ 							$(templateNode._node.parentElement.parentElement).attr('style', style);
+						}
+						return '<div class="col-xs-12"><h1>' 
+							+ instance.get('label') + '</h1><p>' 
+							+ instance.get('tip') + '</p></div>';
 					},
 					getPropertyModel: function() {
 						var instance = this;
-
-						var model = originalGetPropertyModel.call(instance);
-                        console.debug(model);
-						// return model.concat(
-						// 	[
-                        //         {
-                        //             attributeName: 'style',
-                        //             editor: new A.TextAreaCellEditor(),
-                        //             name: Liferay.Language.get('style')
-                        //         },
-						// 		{
-						// 			attributeName: 'usstyle',
-						// 			editor: new A.TextAreaCellEditor(),
-						// 			name: Liferay.Language.get('usstyle')
-						// 		},
-						// 		// {
-						// 		// 	attributeName: 'repeatable',
-						// 		// 	editor: new A.RadioCellEditor( {
-						// 		// 			options: {
-                        //         //                 'false': Liferay.Language.get('no'),
-                        //         //                 'true': Liferay.Language.get('yes')
-                        //         //             }
-						// 		// 		} ),
-						// 		// 	formatter: function(val) {
-                        //         //         var booleanOptions = {
-                        //         //             'false': Liferay.Language.get('no'),
-                        //         //             'true': Liferay.Language.get('yes')
-                        //         //         };
-						// 		// 		return booleanOptions[val.data.value];
-						// 		// 	},
-						// 		// 	name: Liferay.Language.get('repeatable')
-			            //         // }
-						// 	]
-                        // );
                         return [
 							{
 								attributeName: 'name',
 								editor: new A.TextCellEditor(),
-								name: Liferay.Language.get('type')
+								name: Liferay.Language.get('name')
                             },
                             {
 								attributeName: 'type',
@@ -1682,15 +1630,10 @@ AUI.add(
 								name: Liferay.Language.get('text')
 							},
 							{
-								attributeName: 'style',
-								editor: new A.TextAreaCellEditor(),
-								name: Liferay.Language.get('style')
-                            }
-                            ,
-							{
 								attributeName: 'usstyle',
 								editor: new A.TextAreaCellEditor(),
-								name: Liferay.Language.get('usstyle')
+								// il fatto che l'attributo name si riferisca a 'style' è voluto
+								name: Liferay.Language.get('style')
 							},
 							{
 								attributeName: 'tip',
@@ -1716,39 +1659,34 @@ AUI.add(
                             }
 						];
 					},
-					// _uiSetStyle: function(val) {
-					// 	var instance = this;
+										
+					_uiSetUsstyle: function(val) {
+						var instance = this;
+						var templateNode = instance.get('templateNode');
+						var style = instance.get('usstyle');
+						 
+						if (templateNode) {
+							$(templateNode._node.parentElement.parentElement).attr('style', style);
+							templateNode.empty();
+                            templateNode.append('<div class="col-xs-12" style="' 
+                            + style + '"><h1>' 
+                            + instance.get('label') + '</h1><p>' 
+                            + instance.get('tip') + '</p></div>');
+						} else {
+							alert('templatenode is null');
+						}
+					},
 
-					// 	var templateNode = instance.get('templateNode');
-					// 	applyStyles(templateNode, val);
-					// }
+					_uiSetTip: function(val) {
+						var instance = this;
+						instance._uiSetUsstyle(val);
+					},
 
-					// _uiSetLabel: function(val) {
-					// 	var instance = this;
-					// 	console.log('_uiSetLabel');
-					// 	console.log('val: ' + val);
-					// 	var templateNode = instance.get('templateNode');
-					// 	if (templateNode) {
-					// 		console.log('template node: ' + templateNode);
-					// 		templateNode.setContent(val);
-					// 	} else {
-					// 		console.log('templatenode is null');
-					// 	}
-					// },
-					
-					// _uiSetUsstyle: function(val) {
-					// 	var instance = this;
-					// 	console.log('_uiSetUsstyle');
-						
-					// 	console.log('val: ' + val);
-					// 	var templateNode = instance.get('templateNode');
-					// 	if (templateNode) {
-					// 		console.log('template node: ' + templateNode);
-					// 		applyStyles(templateNode, val);
-					// 	} else {
-					// 		console.log('templatenode is null');
-					// 	}
-					// }
+					_uiSetLabel: function(val) {
+						var instance = this;
+						instance._uiSetUsstyle(val);
+					}
+
 				}
 			}
 		);

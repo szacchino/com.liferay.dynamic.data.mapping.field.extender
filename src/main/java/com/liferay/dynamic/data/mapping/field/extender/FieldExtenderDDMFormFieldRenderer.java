@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.*;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -19,7 +20,11 @@ import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.template.*;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.*;
 
 /**
@@ -97,11 +102,13 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		
 		//TODO add additional field attributes
 		//zac
-		fieldContext.put("usstyle", ddmFormField.getProperty("usstyle"));
-		
-		fieldContext.put("restUrl", ddmFormField.getProperty("restUrl"));
-		fieldContext.put("restKey", ddmFormField.getProperty("restKey"));
-		fieldContext.put("restValue", ddmFormField.getProperty("restValue"));
+		if ("ddm-us-div".equals(ddmFormField.getType())) {
+			fieldContext.put("usstyle", ddmFormField.getProperty("usstyle"));
+		} else if ("ddm-rest-select".equals(ddmFormField.getType())) {
+			fieldContext.put("restUrl", ddmFormField.getProperty("restUrl"));
+			fieldContext.put("restKey", ddmFormField.getProperty("restKey"));
+			fieldContext.put("restValue", ddmFormField.getProperty("restValue"));
+		}
 	}
 
 	protected int countFieldRepetition(String[] fieldsDisplayValues, String parentFieldName, int offset) {
@@ -369,7 +376,16 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 			parentFieldContext = getFieldContext(request, response, portletNamespace, namespace, parentDDMFormField, locale);
 		}
 
+		freeMarkerContext.put("ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 		freeMarkerContext.put("fieldStructure", fieldContext);
+		try {
+			String itemSelectorAuthToken = AuthTokenUtil.getToken( request, PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()), PortletKeys.ITEM_SELECTOR);
+			freeMarkerContext.put( "itemSelectorAuthToken", itemSelectorAuthToken);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to generate item selector auth token ", pe);
+		}
 		freeMarkerContext.put("namespace", namespace);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
 		freeMarkerContext.put("portletNamespace", portletNamespace);
@@ -487,4 +503,6 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 
 	private final TemplateResource _defaultReadOnlyTemplateResource;
 	private final TemplateResource _defaultTemplateResource;
+
+	private Log _log = LogFactoryUtil.getLog(FieldExtenderDDMFormFieldRenderer.class);
 }
