@@ -1588,6 +1588,10 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					showLabel: {
+						value: false
+					},
+
                     usstyle: {
 						value: 'background-color:#cecece'
 					}
@@ -1627,7 +1631,7 @@ AUI.add(
 							{
 								attributeName: 'label',
 								editor: new A.TextAreaCellEditor(),
-								name: Liferay.Language.get('text')
+								name: Liferay.Language.get('title')
 							},
 							{
 								attributeName: 'usstyle',
@@ -1637,7 +1641,7 @@ AUI.add(
 							},
 							{
 								attributeName: 'tip',
-								editor: new A.TextCellEditor(),
+								editor: new A.TextAreaCellEditor(),
 								name: Liferay.Language.get('tip')
                             },
                             {
@@ -1679,6 +1683,17 @@ AUI.add(
 
 					_uiSetTip: function(val) {
 						var instance = this;
+						var n = instance.get('tipFlagNode');
+						if (instance.tooltip) {
+							instance.tooltip.set('bodyContent', val);
+						}
+						instance.tooltip = (new A.Tooltip(
+							{
+								bodyContent: val,
+								trigger: n,
+								position: 'right',
+								visible: false
+							}))
 						instance._uiSetUsstyle(val);
 					},
 
