@@ -1577,7 +1577,7 @@ AUI.add(
                     // il datatype undefined consente di non avere caselle di
                     // input nell'ftl
 					dataType: {
-						value: undefined
+						value: 'object'
                     },
                     
 					fieldNamespace: {
@@ -1594,7 +1594,10 @@ AUI.add(
 
                     usstyle: {
 						value: 'background-color:#cecece'
-					}
+					}, 
+					readOnly: {
+						value: true
+					},
 				},
 
 				EXTENDS: FormBuilderTextField,
@@ -1604,7 +1607,7 @@ AUI.add(
 				UI_ATTRS: ['usstyle', 'label', 'tip'],
 				
 				prototype: {
-                    getHTML: function() {
+					getHTML: function() {
 						var instance = this;
 						var templateNode = instance.get('templateNode');
 						if (templateNode && templateNode._node && templateNode._node.parentElement && templateNode._node.parentElement.parentElement) {
@@ -1643,6 +1646,23 @@ AUI.add(
 								attributeName: 'tip',
 								editor: new A.TextAreaCellEditor(),
 								name: Liferay.Language.get('tip')
+                            },
+							{
+								attributeName: 'showLabel',
+								editor: new A.RadioCellEditor( {
+									options: {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									}
+								} ),
+								formatter: function(val) {
+									var booleanOptions = {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									};
+									return booleanOptions[val.data.value];
+								},
+								name: Liferay.Language.get('showLabel')
                             },
                             {
                                 attributeName: 'repeatable',

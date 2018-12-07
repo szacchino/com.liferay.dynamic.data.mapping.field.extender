@@ -6,6 +6,8 @@
     helpMessage=escape(fieldStructure.tip)
     label=escape(label)
 >
+    <#assign inputName = portletNamespace + namespacedFieldName />
+    <input type="hidden" value="" name="${inputName}" id="${inputName}">
     <h1>${fieldStructure.label}</h1>
     <p>${fieldStructure.tip}</p>
     ${fieldStructure.children}
