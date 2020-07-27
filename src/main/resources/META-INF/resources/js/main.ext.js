@@ -234,7 +234,7 @@ AUI.add(
 				//TODO add new field attributes to this list
 				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'restUrl', 'restKey', 'restValue'
 				//zac
-				,'usstyle'
+				,'usstyle', 'usid', 'usistab', 'ustabprefix', 'usistabcontainer'
 			],
 
 				prototype: {

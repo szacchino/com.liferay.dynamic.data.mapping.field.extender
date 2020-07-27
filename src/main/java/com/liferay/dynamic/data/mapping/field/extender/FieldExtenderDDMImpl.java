@@ -88,6 +88,10 @@ public class FieldExtenderDDMImpl extends DDMImpl {
 			//zac
 			else if ("ddm-us-div".equals(ddmFormField.getType())) {
 				object.put("usstyle", ddmFormField.getProperty("usstyle"));
+				object.put("usid", ddmFormField.getProperty("usid"));
+				object.put("usistab", ddmFormField.getProperty("usistab"));
+				object.put("ustabprefix", ddmFormField.getProperty("ustabprefix"));
+				object.put("usistabcontainer", ddmFormField.getProperty("usistabcontainer"));
 			}
 			///zac
 		}

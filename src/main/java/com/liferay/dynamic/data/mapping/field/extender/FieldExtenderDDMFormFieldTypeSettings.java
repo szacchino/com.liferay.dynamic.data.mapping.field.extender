@@ -69,7 +69,7 @@ public interface FieldExtenderDDMFormFieldTypeSettings extends DDMFormFieldTypeS
 					"%not-indexable", "%indexable-keyword", "%indexable-text"
 			},
 			optionValues = {StringPool.BLANK, "keyword", "text"}, type = "select",
-			visibilityExpression = "FALSE"
+			visibilityExpression = "TRUE"
 	)
 	public String indexType();
 
@@ -99,7 +99,7 @@ public interface FieldExtenderDDMFormFieldTypeSettings extends DDMFormFieldTypeS
 	@DDMFormField(label = "%read-only", visibilityExpression = "FALSE")
 	public boolean readOnly();
 
-	@DDMFormField(label = "%repeatable", properties = {"showAsSwitcher=true"})
+	@DDMFormField(label = "%repeatable", properties = {"showAsSwitcher=true"}, visibilityExpression = "TRUE")
 	public boolean repeatable();
 
 	@DDMFormField(
@@ -112,9 +112,18 @@ public interface FieldExtenderDDMFormFieldTypeSettings extends DDMFormFieldTypeS
 
 	@DDMFormField(label = "%restUrl")
 	public String restUrl();
-
+	
+	//TODO specificare i campi aggiuntivi
 	@DDMFormField(label = "%usstyle")
 	public String usstyle();
+	@DDMFormField(label = "%usistab", properties = {"showAsSwitcher=true"})
+	public boolean usistab();
+	@DDMFormField(label = "%ustabprefix")
+	public String ustabprefix();
+	@DDMFormField(label = "%usistabcontainer", properties = {"showAsSwitcher=true"})
+	public boolean usistabcontainer();
+	@DDMFormField(label = "%usid")
+	public String usid();
 
 	@DDMFormField(label = "%restKey")
 	public String restKey();

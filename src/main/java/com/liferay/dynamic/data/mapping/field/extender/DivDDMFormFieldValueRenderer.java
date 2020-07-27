@@ -22,7 +22,7 @@ public class DivDDMFormFieldValueRenderer extends BaseDDMFormFieldValueRenderer 
 	protected ValueAccessor getValueAcessor(Locale locale) {
 		return new ValueAccessor(locale) {
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
-				_log.info("DivDDMFormFieldValueRenderer: " + ddmFormFieldValue.getDDMFormField().getType());
+				// _log.info("DivDDMFormFieldValueRenderer: " + ddmFormFieldValue.getDDMFormField().getType());
 				if ("ddm-us-div".equals(ddmFormFieldValue.getDDMFormField().getType())) {
 					return "";
 				}

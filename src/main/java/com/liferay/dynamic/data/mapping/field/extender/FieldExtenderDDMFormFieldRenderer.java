@@ -104,6 +104,10 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		//zac
 		if ("ddm-us-div".equals(ddmFormField.getType())) {
 			fieldContext.put("usstyle", ddmFormField.getProperty("usstyle"));
+			fieldContext.put("usistabcontainer", Boolean.toString((Boolean)ddmFormField.getProperty("usistabcontainer")));
+			fieldContext.put("usistab", Boolean.toString((Boolean)ddmFormField.getProperty("usistab")));
+			fieldContext.put("ustabprefix", ddmFormField.getProperty("ustabprefix"));
+			fieldContext.put("usid", ddmFormField.getProperty("usid"));
 		} else if ("ddm-rest-select".equals(ddmFormField.getType())) {
 			fieldContext.put("restUrl", ddmFormField.getProperty("restUrl"));
 			fieldContext.put("restKey", ddmFormField.getProperty("restKey"));

@@ -1025,7 +1025,7 @@ AUI.add(
 
 						DDMDateField.superclass.renderUI.apply(instance, arguments);
 
-						instance.datePicker = new A.DatePickerDeprecated(
+						instance.datePicker = new A.DatePicker(
 							{
 								calendar: {
 									locale: Liferay.ThemeDisplay.getLanguageId()
@@ -1544,11 +1544,44 @@ AUI.add(
 					},
 					getPropertyModel: function() {
 						var instance = this;
+						var templateNode = instance.get('templateNode');
 
 						var model = originalGetPropertyModel.call(instance);
-
+						var indexTypeOptions = {
+							'': Liferay.Language.get('not-indexable'),
+							'keyword': Liferay.Language.get('indexable-keyword'),
+							'text': Liferay.Language.get('indexable-text')
+						};
+						var booleanOptions = {
+							'false': Liferay.Language.get('no'),
+							'true': Liferay.Language.get('yes')
+						};
 						return model.concat(
 							[
+								{
+									attributeName: 'indexType',
+									editor: new A.RadioCellEditor(
+										{
+											options: indexTypeOptions
+										}
+									),
+									formatter: function(val) {
+										return indexTypeOptions[val.data.value];
+									},
+									name: Liferay.Language.get('indexable')
+								},
+								{
+									attributeName: 'repeatable',
+									editor: new A.RadioCellEditor(
+										{
+											options: booleanOptions
+										}
+									),
+									formatter: function(val) {
+										return booleanOptions[val.data.value];
+									},
+									name: Liferay.Language.get('repeatable')
+								},
 								{
 									attributeName: 'restUrl',
 									editor: new A.TextAreaCellEditor(),
@@ -1595,6 +1628,18 @@ AUI.add(
                     usstyle: {
 						value: 'background-color:#cecece'
 					}, 
+					usid: {
+						value: STR_BLANK
+					}, 
+					usistab: {
+						value: true
+					},
+					ustabprefix: {
+						value: 'tabprefix1'
+					},
+					usistabcontainer: {
+						value: false
+					},
 					readOnly: {
 						value: true
 					},
@@ -1604,7 +1649,7 @@ AUI.add(
 				
 				NAME: 'ddm-us-div',
 
-				UI_ATTRS: ['usstyle', 'label', 'tip'],
+				UI_ATTRS: ['usstyle', 'usid', 'usistab', 'ustabprefix', 'usistabcontainer', 'label', 'tip'],
 				
 				prototype: {
 					getHTML: function() {
@@ -1639,8 +1684,51 @@ AUI.add(
 							{
 								attributeName: 'usstyle',
 								editor: new A.TextAreaCellEditor(),
-								// il fatto che l'attributo name si riferisca a 'style' è voluto
 								name: Liferay.Language.get('style')
+							},
+							{
+								attributeName: 'usid',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('usid')
+							},
+							{
+								attributeName: 'ustabprefix',
+								editor: new A.TextAreaCellEditor(),
+								name: Liferay.Language.get('ustabprefix')
+							},
+							{
+								attributeName: 'usistab',
+								editor: new A.RadioCellEditor( {
+									options: {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									}
+								} ),
+								formatter: function(val) {
+									var booleanOptions = {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									};
+									return booleanOptions[val.data.value];
+								},
+								name: Liferay.Language.get('usistab')
+							},
+							{
+								attributeName: 'usistabcontainer',
+								editor: new A.RadioCellEditor( {
+									options: {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									}
+								} ),
+								formatter: function(val) {
+									var booleanOptions = {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									};
+									return booleanOptions[val.data.value];
+								},
+								name: Liferay.Language.get('usistabcontainer')
 							},
 							{
 								attributeName: 'tip',
@@ -1720,7 +1808,12 @@ AUI.add(
 					_uiSetLabel: function(val) {
 						var instance = this;
 						instance._uiSetUsstyle(val);
-					}
+					},
+
+					_uiSetUsid: function(val) {},
+					_uiSetUsistab: function(val) {},
+					_uiSetUsistabcontainer: function(val) {},
+					_uiSetUstabprefix: function(val) {},
 
 				}
 			}
