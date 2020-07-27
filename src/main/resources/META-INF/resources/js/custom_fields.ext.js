@@ -1025,7 +1025,7 @@ AUI.add(
 
 						DDMDateField.superclass.renderUI.apply(instance, arguments);
 
-						instance.datePicker = new A.DatePicker(
+						instance.datePicker = new A.DatePickerDeprecated(
 							{
 								calendar: {
 									locale: Liferay.ThemeDisplay.getLanguageId()
@@ -1382,7 +1382,8 @@ AUI.add(
 					getPropertyModel: function() {
 						var instance = this;
 
-                        var model = 
+                        var model = DDMSeparatorField.superclass.getPropertyModel.apply(instance, arguments);
+
                         
 
 						model.push(
