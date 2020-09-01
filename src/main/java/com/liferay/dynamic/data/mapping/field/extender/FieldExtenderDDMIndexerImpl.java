@@ -80,125 +80,125 @@ public class FieldExtenderDDMIndexerImpl implements DDMIndexer {
 
 		for (Field field : fields) {
 			try {
-			// 	String indexType = ddmStructure.getFieldProperty(
-			// 		field.getName(), "indexType");
+				String indexType = ddmStructure.getFieldProperty(
+					field.getName(), "indexType");
 
-			// 	if (Validator.isNull(indexType)) {
-			// 		continue;
-			// 	}
+				if (Validator.isNull(indexType)) {
+					continue;
+				}
 
-			// 	for (Locale locale : locales) {
-			// 		String name = encodeName(
-			// 			ddmStructure.getStructureId(), field.getName(), locale,
-			// 			indexType);
+				for (Locale locale : locales) {
+					String name = encodeName(
+						ddmStructure.getStructureId(), field.getName(), locale,
+						indexType);
 
-			// 		Serializable value = field.getValue(locale);
+					Serializable value = field.getValue(locale);
 
-			// 		if (value instanceof BigDecimal) {
-			// 			document.addNumberSortable(name, (BigDecimal)value);
-			// 		}
-			// 		else if (value instanceof BigDecimal[]) {
-			// 			document.addNumberSortable(name, (BigDecimal[])value);
-			// 		}
-			// 		else if (value instanceof Boolean) {
-			// 			document.addKeywordSortable(name, (Boolean)value);
-			// 		}
-			// 		else if (value instanceof Boolean[]) {
-			// 			document.addKeywordSortable(name, (Boolean[])value);
-			// 		}
-			// 		else if (value instanceof Date) {
-			// 			document.addDateSortable(name, (Date)value);
-			// 		}
-			// 		else if (value instanceof Date[]) {
-			// 			document.addDateSortable(name, (Date[])value);
-			// 		}
-			// 		else if (value instanceof Double) {
-			// 			document.addNumberSortable(name, (Double)value);
-			// 		}
-			// 		else if (value instanceof Double[]) {
-			// 			document.addNumberSortable(name, (Double[])value);
-			// 		}
-			// 		else if (value instanceof Integer) {
-			// 			document.addNumberSortable(name, (Integer)value);
-			// 		}
-			// 		else if (value instanceof Integer[]) {
-			// 			document.addNumberSortable(name, (Integer[])value);
-			// 		}
-			// 		else if (value instanceof Long) {
-			// 			document.addNumberSortable(name, (Long)value);
-			// 		}
-			// 		else if (value instanceof Long[]) {
-			// 			document.addNumberSortable(name, (Long[])value);
-			// 		}
-			// 		else if (value instanceof Float) {
-			// 			document.addNumberSortable(name, (Float)value);
-			// 		}
-			// 		else if (value instanceof Float[]) {
-			// 			document.addNumberSortable(name, (Float[])value);
-			// 		}
-			// 		else if (value instanceof Number[]) {
-			// 			Number[] numbers = (Number[])value;
+					if (value instanceof BigDecimal) {
+						document.addNumberSortable(name, (BigDecimal)value);
+					}
+					else if (value instanceof BigDecimal[]) {
+						document.addNumberSortable(name, (BigDecimal[])value);
+					}
+					else if (value instanceof Boolean) {
+						document.addKeywordSortable(name, (Boolean)value);
+					}
+					else if (value instanceof Boolean[]) {
+						document.addKeywordSortable(name, (Boolean[])value);
+					}
+					else if (value instanceof Date) {
+						document.addDateSortable(name, (Date)value);
+					}
+					else if (value instanceof Date[]) {
+						document.addDateSortable(name, (Date[])value);
+					}
+					else if (value instanceof Double) {
+						document.addNumberSortable(name, (Double)value);
+					}
+					else if (value instanceof Double[]) {
+						document.addNumberSortable(name, (Double[])value);
+					}
+					else if (value instanceof Integer) {
+						document.addNumberSortable(name, (Integer)value);
+					}
+					else if (value instanceof Integer[]) {
+						document.addNumberSortable(name, (Integer[])value);
+					}
+					else if (value instanceof Long) {
+						document.addNumberSortable(name, (Long)value);
+					}
+					else if (value instanceof Long[]) {
+						document.addNumberSortable(name, (Long[])value);
+					}
+					else if (value instanceof Float) {
+						document.addNumberSortable(name, (Float)value);
+					}
+					else if (value instanceof Float[]) {
+						document.addNumberSortable(name, (Float[])value);
+					}
+					else if (value instanceof Number[]) {
+						Number[] numbers = (Number[])value;
 
-			// 			Double[] doubles = new Double[numbers.length];
+						Double[] doubles = new Double[numbers.length];
 
-			// 			for (int i = 0; i < numbers.length; i++) {
-			// 				doubles[i] = numbers[i].doubleValue();
-			// 			}
+						for (int i = 0; i < numbers.length; i++) {
+							doubles[i] = numbers[i].doubleValue();
+						}
 
-			// 			document.addNumberSortable(name, doubles);
-			// 		}
-			// 		else if (value instanceof Object[]) {
-			// 			String[] valuesString = ArrayUtil.toStringArray(
-			// 				(Object[])value);
+						document.addNumberSortable(name, doubles);
+					}
+					else if (value instanceof Object[]) {
+						String[] valuesString = ArrayUtil.toStringArray(
+							(Object[])value);
 
-			// 			if (indexType.equals("keyword")) {
-			// 				document.addKeywordSortable(name, valuesString);
-			// 			}
-			// 			else {
-			// 				document.addTextSortable(name, valuesString);
-			// 			}
-			// 		}
-			// 		else {
-			// 			String valueString = String.valueOf(value);
+						if (indexType.equals("keyword")) {
+							document.addKeywordSortable(name, valuesString);
+						}
+						else {
+							document.addTextSortable(name, valuesString);
+						}
+					}
+					else {
+						String valueString = String.valueOf(value);
 
-			// 			String type = field.getType();
+						String type = field.getType();
 
-			// 			if (type.equals(DDMFormFieldType.GEOLOCATION)) {
-			// 				JSONObject geolocationJSONObject =
-			// 					JSONFactoryUtil.createJSONObject(valueString);
+						if (type.equals(DDMFormFieldType.GEOLOCATION)) {
+							JSONObject geolocationJSONObject =
+								JSONFactoryUtil.createJSONObject(valueString);
 
-			// 				double latitude = geolocationJSONObject.getDouble(
-			// 					"latitude", 0);
-			// 				double longitude = geolocationJSONObject.getDouble(
-			// 					"longitude", 0);
+							double latitude = geolocationJSONObject.getDouble(
+								"latitude", 0);
+							double longitude = geolocationJSONObject.getDouble(
+								"longitude", 0);
 
-			// 				document.addGeoLocation(name, latitude, longitude);
-			// 			}
-			// 			else if (type.equals(DDMImpl.TYPE_RADIO) ||
-			// 					 type.equals(DDMImpl.TYPE_SELECT)) {
+							document.addGeoLocation(name, latitude, longitude);
+						}
+						else if (type.equals(DDMImpl.TYPE_RADIO) ||
+								 type.equals(DDMImpl.TYPE_SELECT)) {
 
-			// 				JSONArray jsonArray =
-			// 					JSONFactoryUtil.createJSONArray(valueString);
+							JSONArray jsonArray =
+								JSONFactoryUtil.createJSONArray(valueString);
 
-			// 				String[] stringArray = ArrayUtil.toStringArray(
-			// 					jsonArray);
+							String[] stringArray = ArrayUtil.toStringArray(
+								jsonArray);
 
-			// 				document.addKeywordSortable(name, stringArray);
-			// 			}
-			// 			else {
-			// 				if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
-			// 					valueString = HtmlUtil.extractText(valueString);
-			// 				}
+							document.addKeywordSortable(name, stringArray);
+						}
+						else {
+							if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {
+								valueString = HtmlUtil.extractText(valueString);
+							}
 
-			// 				if (indexType.equals("keyword")) {
-			// 					document.addKeywordSortable(name, valueString);
-			// 				}
-			// 				else {
-			// 					document.addTextSortable(name, valueString);
-			// 				}
-			// 			}
-			// 		}
-			// 	}
+							if (indexType.equals("keyword")) {
+								document.addKeywordSortable(name, valueString);
+							}
+							else {
+								document.addTextSortable(name, valueString);
+							}
+						}
+					}
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
