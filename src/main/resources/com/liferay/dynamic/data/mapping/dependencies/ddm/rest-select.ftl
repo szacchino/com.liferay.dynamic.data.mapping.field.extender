@@ -14,9 +14,9 @@
 	</div>
 </@>
 
-<#if fieldStructure.restUrl?? && fieldStructure.restValue?? && fieldStructure.restKey??>
+<#if fieldStructure.restUrl?? && fieldStructure.restData?? && fieldStructure.restValue?? && fieldStructure.restKey??>
 	<script type="text/javascript">
-		YUI().use(
+		<#--  YUI().use(
 			'aui-io-request',
 			'node',
 			function(Y) {
@@ -38,6 +38,21 @@
 						}
 				);
 			}
-		);
+		);  -->
+		YUI().use(
+			'aui-io-request',
+			'node',
+			function(Y) {
+				Liferay.Service(
+					'${fieldStructure.restUrl}',
+					JSON.parse('${fieldStructure.restData}')
+					,
+					function(results) {
+						for (var i = 0; i < results.length; i++) {
+							Y.one('.${namespacedFieldName}').append('<option value="' + results[i]["${fieldStructure.restValue}"] + '">' + results[i]["${fieldStructure.restKey}"] + '</option>');
+						}
+					}
+				);
+			});
 	</script>
 </#if>

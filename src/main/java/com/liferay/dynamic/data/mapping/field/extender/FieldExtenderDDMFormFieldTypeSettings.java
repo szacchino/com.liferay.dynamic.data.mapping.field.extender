@@ -130,6 +130,9 @@ public interface FieldExtenderDDMFormFieldTypeSettings extends DDMFormFieldTypeS
 
 	@DDMFormField(label = "%restValue")
 	public String restValue();
+	
+	@DDMFormField(label = "%restValue")
+	public String restData();
 
 	@DDMFormField(
 			label = "%help-text",

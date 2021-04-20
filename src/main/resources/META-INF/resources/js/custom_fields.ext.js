@@ -1521,6 +1521,12 @@ AUI.add(
 					restUrl: {
 						value: 'http://localhost:8080/api/jsonws/country/get-countries'
 					},
+					restData: {
+						value: JSON.stringify({
+							groupId: 20152,
+							plexusId: 1
+						})
+					},
 					restKey: {
 						value: 'name'
 					},
@@ -1587,6 +1593,11 @@ AUI.add(
 									attributeName: 'restUrl',
 									editor: new A.TextAreaCellEditor(),
 									name: 'Endpoint URL'
+								},
+								{
+									attributeName: 'restData',
+									editor: new A.TextAreaCellEditor(),
+									name: 'Endpoint JSON Data'
 								},
 								{
 									attributeName: 'restKey',

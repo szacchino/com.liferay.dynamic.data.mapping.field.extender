@@ -232,7 +232,7 @@ AUI.add(
 				UNIQUE_FIELD_NAMES_MAP: new A.Map(),
 
 				//TODO add new field attributes to this list
-				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'restUrl', 'restKey', 'restValue'
+				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'restUrl', 'restData', 'restKey', 'restValue'
 				//zac
 				,'usstyle', 'usid', 'usistab', 'ustabprefix', 'usistabcontainer'
 			],

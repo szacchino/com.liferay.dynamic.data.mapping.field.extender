@@ -82,6 +82,7 @@ public class FieldExtenderDDMImpl extends DDMImpl {
 			//TODO if custom DDM field attributes are used, put them on the JSONObject here.
 			if ("ddm-rest-select".equals(ddmFormField.getType())) {
 				object.put("restUrl", ddmFormField.getProperty("restUrl"));
+				object.put("restData", ddmFormField.getProperty("restData"));
 				object.put("restKey", ddmFormField.getProperty("restKey"));
 				object.put("restValue", ddmFormField.getProperty("restValue"));
 			} 

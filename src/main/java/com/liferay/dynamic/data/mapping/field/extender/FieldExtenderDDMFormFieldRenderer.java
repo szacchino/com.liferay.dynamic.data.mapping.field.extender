@@ -110,6 +110,7 @@ public class FieldExtenderDDMFormFieldRenderer implements DDMFormFieldRenderer {
 			fieldContext.put("usid", ddmFormField.getProperty("usid"));
 		} else if ("ddm-rest-select".equals(ddmFormField.getType())) {
 			fieldContext.put("restUrl", ddmFormField.getProperty("restUrl"));
+			fieldContext.put("restData", ddmFormField.getProperty("restData"));
 			fieldContext.put("restKey", ddmFormField.getProperty("restKey"));
 			fieldContext.put("restValue", ddmFormField.getProperty("restValue"));
 		}
