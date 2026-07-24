@@ -1,6 +1,6 @@
 AUI.add(
 	'liferay-portlet-dynamic-data-mapping-custom-fields',
-	function(A) {
+	function (A) {
 		var AArray = A.Array;
 
 		var FormBuilderTextField = A.FormBuilderTextField;
@@ -66,7 +66,7 @@ AUI.add(
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureDuplicateFieldName = Liferay.Language.get('please-enter-a-unique-field-name');
 
-		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function(value, editorNode) {
+		DEFAULTS_FORM_VALIDATOR.RULES.structureDuplicateFieldName = function (value, editorNode) {
 			var instance = this;
 
 			var editingField = UNIQUE_FIELD_NAMES_MAP.getValue(value);
@@ -84,17 +84,17 @@ AUI.add(
 
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters-or-underscore');
 
-		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
+		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function (value) {
 			return LiferayFormBuilderUtil.validateFieldName(value);
 		};
 
-		var applyStyles = function(node, styleContent) {
+		var applyStyles = function (node, styleContent) {
 			var styles = styleContent.replace(/\n/g, STR_BLANK).split(';');
 
 			node.setStyle(STR_BLANK);
 
 			styles.forEach(
-				function(item, index) {
+				function (item, index) {
 					var rule = item.split(':');
 
 					if (rule.length == 2) {
@@ -116,13 +116,13 @@ AUI.add(
 				prototype: {
 					ELEMENT_TEMPLATE: '<input type="hidden" />',
 
-					getElementsValue: function() {
+					getElementsValue: function () {
 						var instance = this;
 
 						return instance.get('value');
 					},
 
-					_defInitToolbarFn: function() {
+					_defInitToolbarFn: function () {
 						var instance = this;
 
 						DLFileEntryCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
@@ -148,7 +148,7 @@ AUI.add(
 						);
 					},
 
-					_getDocumentLibrarySelectorURL: function() {
+					_getDocumentLibrarySelectorURL: function () {
 						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
@@ -178,7 +178,7 @@ AUI.add(
 						return portletURL.toString();
 					},
 
-					_getUploadURL: function() {
+					_getUploadURL: function () {
 						var instance = this;
 
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getLayoutRelativeControlPanelURL());
@@ -193,7 +193,7 @@ AUI.add(
 						return portletURL.toString();
 					},
 
-					_isDocumentLibraryDialogOpen: function() {
+					_isDocumentLibraryDialogOpen: function () {
 						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
@@ -201,7 +201,7 @@ AUI.add(
 						return !!Liferay.Util.getWindow(portletNamespace + 'selectDocumentLibrary');
 					},
 
-					_onClickChoose: function() {
+					_onClickChoose: function () {
 						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
@@ -210,7 +210,7 @@ AUI.add(
 							{
 								eventName: portletNamespace + 'selectDocumentLibrary',
 								on: {
-									selectedItemChange: function(event) {
+									selectedItemChange: function (event) {
 										var selectedItem = event.newVal;
 
 										if (selectedItem) {
@@ -228,13 +228,13 @@ AUI.add(
 
 					},
 
-					_onClickClear: function() {
+					_onClickClear: function () {
 						var instance = this;
 
 						instance.set('value', STR_BLANK);
 					},
 
-					_onDocMouseDownExt: function(event) {
+					_onDocMouseDownExt: function (event) {
 						var instance = this;
 
 						var boundingBox = instance.get('boundingBox');
@@ -246,7 +246,7 @@ AUI.add(
 						}
 					},
 
-					_selectFileEntry: function(groupId, title, uuid) {
+					_selectFileEntry: function (groupId, title, uuid) {
 						var instance = this;
 
 						instance.set(
@@ -261,7 +261,7 @@ AUI.add(
 						);
 					},
 
-					_syncElementsFocus: function() {
+					_syncElementsFocus: function () {
 						var instance = this;
 
 						var boundingBox = instance.toolbar.get('boundingBox');
@@ -276,7 +276,7 @@ AUI.add(
 						}
 					},
 
-					_syncFileLabel: function(title, url) {
+					_syncFileLabel: function (title, url) {
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
@@ -293,13 +293,13 @@ AUI.add(
 						linkNode.setContent(LString.escapeHTML(title));
 					},
 
-					_uiSetValue: function(val) {
+					_uiSetValue: function (val) {
 						var instance = this;
 
 						if (val) {
 							LiferayFormBuilderUtil.getFileEntry(
 								val,
-								function(fileEntry) {
+								function (fileEntry) {
 									var url = LiferayFormBuilderUtil.getFileEntryURL(fileEntry);
 
 									instance._syncFileLabel(fileEntry.title, url);
@@ -327,7 +327,7 @@ AUI.add(
 				prototype: {
 					OPT_GROUP_TEMPLATE: '<optgroup label="{label}">{options}</optgroup>',
 
-					renderUI: function(val) {
+					renderUI: function (val) {
 						var instance = this;
 
 						var options = {};
@@ -338,8 +338,8 @@ AUI.add(
 							themeDisplay.getPathMain() + '/portal/get_layouts',
 							{
 								after: {
-									success: function() {
-										var	response = JSON.parse(this.get('responseData'));
+									success: function () {
+										var response = JSON.parse(this.get('responseData'));
 
 										if (response && response.layouts) {
 											instance._createOptionElements(response.layouts, options, STR_BLANK);
@@ -359,11 +359,11 @@ AUI.add(
 						);
 					},
 
-					_createOptionElements: function(layouts, options, prefix) {
+					_createOptionElements: function (layouts, options, prefix) {
 						var instance = this;
 
 						layouts.forEach(
-							function(item, index) {
+							function (item, index) {
 								options[prefix + item.name] = {
 									groupId: item.groupId,
 									layoutId: item.layoutId,
@@ -382,7 +382,7 @@ AUI.add(
 						);
 					},
 
-					_createOptions: function(val) {
+					_createOptions: function (val) {
 						var instance = this;
 
 						var privateOptions = [];
@@ -390,7 +390,7 @@ AUI.add(
 
 						A.each(
 							val,
-							function(item, index) {
+							function (item, index) {
 								var values = {
 									id: A.guid(),
 									label: index,
@@ -434,7 +434,7 @@ AUI.add(
 						instance.options = elements.all('option');
 					},
 
-					_uiSetValue: function(val) {
+					_uiSetValue: function (val) {
 						var instance = this;
 
 						var options = instance.options;
@@ -446,7 +446,7 @@ AUI.add(
 								var selLayout = LiferayFormBuilderUtil.parseJSON(val);
 
 								options.each(
-									function(item, index) {
+									function (item, index) {
 										var curLayout = LiferayFormBuilderUtil.parseJSON(item.attr('value'));
 
 										if (curLayout.groupId === selLayout.groupId && curLayout.layoutId === selLayout.layoutId && curLayout.privateLayout === selLayout.privateLayout) {
@@ -471,12 +471,12 @@ AUI.add(
 		];
 
 		customCellEditors.forEach(
-			function(item, index) {
+			function (item, index) {
 				Liferay.FormBuilder.CUSTOM_CELL_EDITORS[item.NAME] = item;
 			}
 		);
 
-		var LiferayFieldSupport = function() {
+		var LiferayFieldSupport = function () {
 		};
 
 		LiferayFieldSupport.ATTRS = {
@@ -496,10 +496,10 @@ AUI.add(
 
 			name: {
 				setter: LiferayFormBuilderUtil.normalizeKey,
-				validator: function(val) {
+				validator: function (val) {
 					return !UNIQUE_FIELD_NAMES_MAP.has(val);
 				},
-				valueFn: function() {
+				valueFn: function () {
 					var instance = this;
 
 					var label = LiferayFormBuilderUtil.normalizeKey(instance.get('label'));
@@ -522,27 +522,27 @@ AUI.add(
 			}
 		};
 
-		LiferayFieldSupport.prototype.initializer = function() {
+		LiferayFieldSupport.prototype.initializer = function () {
 			var instance = this;
 
 			instance.after('nameChange', instance._afterNameChange);
 		};
 
-		LiferayFieldSupport.prototype._afterNameChange = function(event) {
+		LiferayFieldSupport.prototype._afterNameChange = function (event) {
 			var instance = this;
 
 			UNIQUE_FIELD_NAMES_MAP.remove(event.prevVal);
 			UNIQUE_FIELD_NAMES_MAP.put(event.newVal, instance);
 		};
 
-		LiferayFieldSupport.prototype._handleDeleteEvent = function(event) {
+		LiferayFieldSupport.prototype._handleDeleteEvent = function (event) {
 			var instance = this;
 
 			var strings = instance.getStrings();
 
 			var deleteModal = Liferay.Util.Window.getWindow(
 				{
-					dialog:	{
+					dialog: {
 						bodyContent: strings.deleteFieldsMessage,
 						destroyOnHide: true,
 						height: 200,
@@ -553,7 +553,7 @@ AUI.add(
 									cssClass: 'btn-primary',
 									label: Liferay.Language.get('ok'),
 									on: {
-										click: function() {
+										click: function () {
 											instance.destroy();
 
 											deleteModal.hide();
@@ -563,7 +563,7 @@ AUI.add(
 								{
 									label: Liferay.Language.get('cancel'),
 									on: {
-										click: function() {
+										click: function () {
 											deleteModal.hide();
 										}
 									}
@@ -579,13 +579,13 @@ AUI.add(
 			event.stopPropagation();
 		};
 
-		LiferayFieldSupport.prototype._randomString = function(length) {
+		LiferayFieldSupport.prototype._randomString = function (length) {
 			var randomString = Liferay.Util.randomInt().toString(36);
 
 			return randomString.substring(0, length);
 		};
 
-		var LocalizableFieldSupport = function() {
+		var LocalizableFieldSupport = function () {
 		};
 
 		LocalizableFieldSupport.ATTRS = {
@@ -599,7 +599,7 @@ AUI.add(
 			}
 		};
 
-		LocalizableFieldSupport.prototype.initializer = function() {
+		LocalizableFieldSupport.prototype.initializer = function () {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -607,7 +607,7 @@ AUI.add(
 			instance.after('render', instance._afterLocalizableFieldRender);
 
 			LOCALIZABLE_FIELD_ATTRS.forEach(
-				function(localizableField) {
+				function (localizableField) {
 					instance.after(localizableField + 'Change', instance._afterLocalizableFieldChange);
 				}
 			);
@@ -615,13 +615,13 @@ AUI.add(
 			builder.translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance);
 		};
 
-		LocalizableFieldSupport.prototype._afterEditingLocaleChange = function(event) {
+		LocalizableFieldSupport.prototype._afterEditingLocaleChange = function (event) {
 			var instance = this;
 
 			instance._syncLocaleUI(event.newVal);
 		};
 
-		LocalizableFieldSupport.prototype._afterLocalizableFieldChange = function(event) {
+		LocalizableFieldSupport.prototype._afterLocalizableFieldChange = function (event) {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -633,7 +633,7 @@ AUI.add(
 			instance._updateLocalizationMapAttribute(editingLocale, event.attrName);
 		};
 
-		LocalizableFieldSupport.prototype._afterLocalizableFieldRender = function(event) {
+		LocalizableFieldSupport.prototype._afterLocalizableFieldRender = function (event) {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -645,7 +645,7 @@ AUI.add(
 			instance._updateLocalizationMap(editingLocale);
 		};
 
-		LocalizableFieldSupport.prototype._getReadOnlyAttributes = function(val) {
+		LocalizableFieldSupport.prototype._getReadOnlyAttributes = function (val) {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -662,7 +662,7 @@ AUI.add(
 			return AArray.dedupe(val);
 		};
 
-		LocalizableFieldSupport.prototype._syncLocaleUI = function(locale) {
+		LocalizableFieldSupport.prototype._syncLocaleUI = function (locale) {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -681,7 +681,7 @@ AUI.add(
 
 			if (isObject(localeMap)) {
 				LOCALIZABLE_FIELD_ATTRS.forEach(
-					function(item, index) {
+					function (item, index) {
 						if (item !== 'options') {
 							var localizedItem = localeMap[item];
 
@@ -704,13 +704,13 @@ AUI.add(
 			}
 		};
 
-		LocalizableFieldSupport.prototype._syncOptionsLocaleUI = function(locale) {
+		LocalizableFieldSupport.prototype._syncOptionsLocaleUI = function (locale) {
 			var instance = this;
 
 			var options = instance.get('options');
 
 			options.forEach(
-				function(item, index) {
+				function (item, index) {
 					var localizationMap = item.localizationMap;
 
 					if (isObject(localizationMap)) {
@@ -726,17 +726,17 @@ AUI.add(
 			instance.set('options', options);
 		};
 
-		LocalizableFieldSupport.prototype._updateLocalizationMap = function(locale) {
+		LocalizableFieldSupport.prototype._updateLocalizationMap = function (locale) {
 			var instance = this;
 
 			LOCALIZABLE_FIELD_ATTRS.forEach(
-				function(item, index) {
+				function (item, index) {
 					instance._updateLocalizationMapAttribute(locale, item);
 				}
 			);
 		};
 
-		LocalizableFieldSupport.prototype._updateLocalizationMapAttribute = function(locale, attributeName) {
+		LocalizableFieldSupport.prototype._updateLocalizationMapAttribute = function (locale, attributeName) {
 			var instance = this;
 
 			if (attributeName === 'options') {
@@ -755,14 +755,14 @@ AUI.add(
 			}
 		};
 
-		LocalizableFieldSupport.prototype._updateLocalizationMapOptions = function(locale) {
+		LocalizableFieldSupport.prototype._updateLocalizationMapOptions = function (locale) {
 			var instance = this;
 
 			var options = instance.get('options');
 
 			if (options) {
 				options.forEach(
-					function(item, index) {
+					function (item, index) {
 						var localizationMap = item.localizationMap;
 
 						if (!isObject(localizationMap)) {
@@ -779,14 +779,14 @@ AUI.add(
 			}
 		};
 
-		var SerializableFieldSupport = function() {
+		var SerializableFieldSupport = function () {
 		};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldLocalizedAttributes = function(fieldJSON) {
+		SerializableFieldSupport.prototype._addDefinitionFieldLocalizedAttributes = function (fieldJSON) {
 			var instance = this;
 
 			LOCALIZABLE_FIELD_ATTRS.forEach(
-				function(attr) {
+				function (attr) {
 					if (attr === 'options') {
 						if (instanceOf(instance, A.FormBuilderMultipleChoiceField)) {
 							instance._addDefinitionFieldOptions(fieldJSON);
@@ -799,17 +799,17 @@ AUI.add(
 			);
 		};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldUnlocalizedAttributes = function(fieldJSON) {
+		SerializableFieldSupport.prototype._addDefinitionFieldUnlocalizedAttributes = function (fieldJSON) {
 			var instance = this;
 
 			UNLOCALIZABLE_FIELD_ATTRS.forEach(
-				function(attr) {
+				function (attr) {
 					fieldJSON[attr] = instance.get(attr);
 				}
 			);
 		};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldOptions = function(fieldJSON) {
+		SerializableFieldSupport.prototype._addDefinitionFieldOptions = function (fieldJSON) {
 			var instance = this;
 
 			var options = instance.get('options');
@@ -818,7 +818,7 @@ AUI.add(
 
 			if (options) {
 				options.forEach(
-					function(option) {
+					function (option) {
 						var fieldOption = {};
 
 						var localizationMap = option.localizationMap;
@@ -828,7 +828,7 @@ AUI.add(
 
 						A.each(
 							localizationMap,
-							function(item, index, collection) {
+							function (item, index, collection) {
 								fieldOption.label[index] = LiferayFormBuilderUtil.normalizeValue(item.label);
 							}
 						);
@@ -841,13 +841,13 @@ AUI.add(
 			}
 		};
 
-		SerializableFieldSupport.prototype._addDefinitionFieldNestedFields = function(fieldJSON) {
+		SerializableFieldSupport.prototype._addDefinitionFieldNestedFields = function (fieldJSON) {
 			var instance = this;
 
 			var nestedFields = [];
 
 			instance.get('fields').each(
-				function(childField) {
+				function (childField) {
 					nestedFields.push(
 						childField.serialize()
 					);
@@ -859,7 +859,7 @@ AUI.add(
 			}
 		};
 
-		SerializableFieldSupport.prototype._getLocalizedValue = function(attribute) {
+		SerializableFieldSupport.prototype._getLocalizedValue = function (attribute) {
 			var instance = this;
 
 			var builder = instance.get('builder');
@@ -873,7 +873,7 @@ AUI.add(
 			var defaultLocale = translationManager.get('defaultLocale');
 
 			translationManager.get('availableLocales').forEach(
-				function(locale) {
+				function (locale) {
 					var value = A.Object.getValue(localizationMap, [locale, attribute]);
 
 					if (!isValue(value)) {
@@ -891,7 +891,7 @@ AUI.add(
 			return localizedValue;
 		};
 
-		SerializableFieldSupport.prototype.serialize = function() {
+		SerializableFieldSupport.prototype.serialize = function () {
 			var instance = this;
 
 			var fieldJSON = {};
@@ -909,7 +909,7 @@ AUI.add(
 
 		var originalGetPropertyModel = FormBuilderProto.getPropertyModel;
 
-		FormBuilderProto.getPropertyModel = function() {
+		FormBuilderProto.getPropertyModel = function () {
 			var instance = this;
 
 			var model = originalGetPropertyModel.call(instance);
@@ -942,7 +942,7 @@ AUI.add(
 			};
 
 			model.forEach(
-				function(item, index) {
+				function (item, index) {
 					if (item.attributeName == 'name') {
 						item.editor = new A.TextCellEditor(
 							{
@@ -970,7 +970,7 @@ AUI.add(
 								options: indexTypeOptions
 							}
 						),
-						formatter: function(val) {
+						formatter: function (val) {
 							return indexTypeOptions[val.data.value];
 						},
 						name: Liferay.Language.get('indexable')
@@ -982,7 +982,7 @@ AUI.add(
 								options: booleanOptions
 							}
 						),
-						formatter: function(val) {
+						formatter: function (val) {
 							return booleanOptions[val.data.value];
 						},
 						name: Liferay.Language.get('localizable')
@@ -994,7 +994,7 @@ AUI.add(
 								options: booleanOptions
 							}
 						),
-						formatter: function(val) {
+						formatter: function (val) {
 							return booleanOptions[val.data.value];
 						},
 						name: Liferay.Language.get('repeatable')
@@ -1020,7 +1020,7 @@ AUI.add(
 				NAME: 'ddm-date',
 
 				prototype: {
-					renderUI: function() {
+					renderUI: function () {
 						var instance = this;
 
 						DDMDateField.superclass.renderUI.apply(instance, arguments);
@@ -1045,13 +1045,13 @@ AUI.add(
 						);
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
 						var model = DDMDateField.superclass.getPropertyModel.apply(instance, arguments);
 
 						model.forEach(
-							function(item, index, collection) {
+							function (item, index, collection) {
 								var attributeName = item.attributeName;
 
 								if (attributeName === 'predefinedValue') {
@@ -1060,7 +1060,7 @@ AUI.add(
 										editor: new A.DateCellEditor(
 											{
 												dateFormat: '%m/%d/%Y',
-												inputFormatter: function(val) {
+												inputFormatter: function (val) {
 													var instance = this;
 
 													var value = STR_BLANK;
@@ -1120,23 +1120,23 @@ AUI.add(
 				NAME: 'ddm-documentlibrary',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_INPUT_BUTTON;
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
 						var model = DDMDocumentLibraryField.superclass.getPropertyModel.apply(instance, arguments);
 
 						model.forEach(
-							function(item, index) {
+							function (item, index) {
 								var attributeName = item.attributeName;
 
 								if (attributeName === 'predefinedValue') {
 									item.editor = new DLFileEntryCellEditor();
 
-									item.formatter = function(obj) {
+									item.formatter = function (obj) {
 										var data = obj.data;
 
 										var label = STR_BLANK;
@@ -1159,13 +1159,13 @@ AUI.add(
 						return model;
 					},
 
-					_defaultFormatter: function() {
+					_defaultFormatter: function () {
 						var instance = this;
 
 						return 'documents-and-media';
 					},
 
-					_uiSetValue: function() {
+					_uiSetValue: function () {
 						return Liferay.Language.get('select');
 					}
 
@@ -1196,15 +1196,15 @@ AUI.add(
 				NAME: 'ddm-geolocation',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_GEOLOCATION;
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
 						return DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments).filter(
-							function(item, index) {
+							function (item, index) {
 								return item.attributeName !== 'predefinedValue';
 							}
 						);
@@ -1234,7 +1234,7 @@ AUI.add(
 				NAME: 'ddm-image',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_WCM_IMAGE;
 					}
 				}
@@ -1305,11 +1305,11 @@ AUI.add(
 				UI_ATTRS: ['label', 'style'],
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_PARAGRAPH;
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
 						return [
@@ -1331,13 +1331,13 @@ AUI.add(
 						];
 					},
 
-					_uiSetLabel: function(val) {
+					_uiSetLabel: function (val) {
 						var instance = this;
 
 						instance.get('templateNode').setContent(val);
 					},
 
-					_uiSetStyle: function(val) {
+					_uiSetStyle: function (val) {
 						var instance = this;
 
 						var templateNode = instance.get('templateNode');
@@ -1364,8 +1364,8 @@ AUI.add(
 					},
 
 					style: {
-                        value: STR_BLANK
-                    }
+						value: STR_BLANK
+					}
 				},
 
 				EXTENDS: A.FormBuilderField,
@@ -1375,16 +1375,16 @@ AUI.add(
 				UI_ATTRS: ['style'],
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_SEPARATOR;
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
-                        var model = DDMSeparatorField.superclass.getPropertyModel.apply(instance, arguments);
+						var model = DDMSeparatorField.superclass.getPropertyModel.apply(instance, arguments);
 
-                        
+
 
 						model.push(
 							{
@@ -1397,7 +1397,7 @@ AUI.add(
 						return model;
 					},
 
-					_uiSetStyle: function(val) {
+					_uiSetStyle: function (val) {
 						var instance = this;
 
 						var templateNode = instance.get('templateNode');
@@ -1429,7 +1429,7 @@ AUI.add(
 				NAME: 'ddm-text-html',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_TEXT_HTML;
 					}
 				}
@@ -1453,11 +1453,11 @@ AUI.add(
 				NAME: 'ddm-journal-article',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_INPUT_BUTTON;
 					},
 
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 
 						var model = DDMJournalArticleField.superclass.getPropertyModel.apply(instance, arguments);
@@ -1493,7 +1493,7 @@ AUI.add(
 				NAME: 'ddm-link-to-page',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return TPL_INPUT_BUTTON;
 					}
 				}
@@ -1519,12 +1519,24 @@ AUI.add(
 			{
 				ATTRS: {
 					restUrl: {
-						value: 'http://localhost:8080/api/jsonws/country/get-countries'
+						value: '/country/get-countries'
 					},
 					restData: {
 						value: JSON.stringify({
+							_commento_1: "Parametro statico: valore stringa o numerico prefissato",
 							groupId: 20152,
-							plexusId: 1
+							_commento_2: "Parametro dinamico basato su template con encodeURI: sostituisce i segnaposto ${nomeCampo} con i valori correnti dei campi della struttura",
+							searchKey: {
+								type: "template",
+								encodeURI: true,
+								template: "${nazione}_${regione}"
+							},
+							_commento_3: "Parametro dinamico semplice senza encodeURI per referenziare un singolo campo della struttura",
+							countryId: {
+								type: "template",
+								encodeURI: false,
+								template: "${selectCountry}"
+							}
 						})
 					},
 					restKey: {
@@ -1538,7 +1550,7 @@ AUI.add(
 					},
 					fieldNamespace: {
 						value: 'ddm'
-                    },
+					},
 				},
 
 				EXTENDS: FormBuilderTextField,
@@ -1546,10 +1558,10 @@ AUI.add(
 				NAME: 'ddm-rest-select',
 
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						return '<select class="form-builder-field-node form-control"><option></option></select>';
 					},
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
 						var templateNode = instance.get('templateNode');
 
@@ -1572,7 +1584,7 @@ AUI.add(
 											options: indexTypeOptions
 										}
 									),
-									formatter: function(val) {
+									formatter: function (val) {
 										return indexTypeOptions[val.data.value];
 									},
 									name: Liferay.Language.get('indexable')
@@ -1584,7 +1596,7 @@ AUI.add(
 											options: booleanOptions
 										}
 									),
-									formatter: function(val) {
+									formatter: function (val) {
 										return booleanOptions[val.data.value];
 									},
 									name: Liferay.Language.get('repeatable')
@@ -1608,28 +1620,28 @@ AUI.add(
 									attributeName: 'restValue',
 									editor: new A.TextCellEditor(),
 									name: 'Option value mapping'
-                                },
+								},
 							]
 						);
 					}
 				}
 			}
 		);
-		
+
 		var DDMUsDivField = A.Component.create(
 			{
 				ATTRS: {
-                    // il datatype undefined consente di non avere caselle di
-                    // input nell'ftl
+					// il datatype undefined consente di non avere caselle di
+					// input nell'ftl
 					dataType: {
 						value: 'object'
-                    },
-                    
+					},
+
 					fieldNamespace: {
 						value: 'ddm'
-                    },
-                    
-                    style: {
+					},
+
+					style: {
 						value: STR_BLANK
 					},
 
@@ -1637,12 +1649,12 @@ AUI.add(
 						value: false
 					},
 
-                    usstyle: {
+					usstyle: {
 						value: 'background-color:#cecece'
-					}, 
+					},
 					usid: {
 						value: STR_BLANK
-					}, 
+					},
 					usistab: {
 						value: true
 					},
@@ -1658,32 +1670,32 @@ AUI.add(
 				},
 
 				EXTENDS: FormBuilderTextField,
-				
+
 				NAME: 'ddm-us-div',
 
 				UI_ATTRS: ['usstyle', 'usid', 'usistab', 'ustabprefix', 'usistabcontainer', 'label', 'tip'],
-				
+
 				prototype: {
-					getHTML: function() {
+					getHTML: function () {
 						var instance = this;
 						var templateNode = instance.get('templateNode');
 						if (templateNode && templateNode._node && templateNode._node.parentElement && templateNode._node.parentElement.parentElement) {
 							var style = instance.get('usstyle');
- 							$(templateNode._node.parentElement.parentElement).attr('style', style);
+							$(templateNode._node.parentElement.parentElement).attr('style', style);
 						}
-						return '<div class="col-xs-12"><h1>' 
-							+ instance.get('label') + '</h1><p>' 
+						return '<div class="col-xs-12"><h1>'
+							+ instance.get('label') + '</h1><p>'
 							+ instance.get('tip') + '</p></div>';
 					},
-					getPropertyModel: function() {
+					getPropertyModel: function () {
 						var instance = this;
-                        return [
+						return [
 							{
 								attributeName: 'name',
 								editor: new A.TextCellEditor(),
 								name: Liferay.Language.get('name')
-                            },
-                            {
+							},
+							{
 								attributeName: 'type',
 								editor: false,
 								name: Liferay.Language.get('type')
@@ -1710,13 +1722,13 @@ AUI.add(
 							},
 							{
 								attributeName: 'usistab',
-								editor: new A.RadioCellEditor( {
+								editor: new A.RadioCellEditor({
 									options: {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
 									}
-								} ),
-								formatter: function(val) {
+								}),
+								formatter: function (val) {
 									var booleanOptions = {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
@@ -1727,13 +1739,13 @@ AUI.add(
 							},
 							{
 								attributeName: 'usistabcontainer',
-								editor: new A.RadioCellEditor( {
+								editor: new A.RadioCellEditor({
 									options: {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
 									}
-								} ),
-								formatter: function(val) {
+								}),
+								formatter: function (val) {
 									var booleanOptions = {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
@@ -1746,16 +1758,16 @@ AUI.add(
 								attributeName: 'tip',
 								editor: new A.TextAreaCellEditor(),
 								name: Liferay.Language.get('tip')
-                            },
+							},
 							{
 								attributeName: 'showLabel',
-								editor: new A.RadioCellEditor( {
+								editor: new A.RadioCellEditor({
 									options: {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
 									}
-								} ),
-								formatter: function(val) {
+								}),
+								formatter: function (val) {
 									var booleanOptions = {
 										'false': Liferay.Language.get('no'),
 										'true': Liferay.Language.get('yes')
@@ -1763,45 +1775,45 @@ AUI.add(
 									return booleanOptions[val.data.value];
 								},
 								name: Liferay.Language.get('showLabel')
-                            },
-                            {
-                                attributeName: 'repeatable',
-                                editor: new A.RadioCellEditor( {
-                                        options: {
-                                            'false': Liferay.Language.get('no'),
-                                            'true': Liferay.Language.get('yes')
-                                        }
-                                    } ),
-                                formatter: function(val) {
-                                    var booleanOptions = {
-                                        'false': Liferay.Language.get('no'),
-                                        'true': Liferay.Language.get('yes')
-                                    };
-                                    return booleanOptions[val.data.value];
-                                },
-                                name: Liferay.Language.get('repeatable')
-                            }
+							},
+							{
+								attributeName: 'repeatable',
+								editor: new A.RadioCellEditor({
+									options: {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									}
+								}),
+								formatter: function (val) {
+									var booleanOptions = {
+										'false': Liferay.Language.get('no'),
+										'true': Liferay.Language.get('yes')
+									};
+									return booleanOptions[val.data.value];
+								},
+								name: Liferay.Language.get('repeatable')
+							}
 						];
 					},
-										
-					_uiSetUsstyle: function(val) {
+
+					_uiSetUsstyle: function (val) {
 						var instance = this;
 						var templateNode = instance.get('templateNode');
 						var style = instance.get('usstyle');
-						 
+
 						if (templateNode) {
 							$(templateNode._node.parentElement.parentElement).attr('style', style);
 							templateNode.empty();
-                            templateNode.append('<div class="col-xs-12" style="' 
-                            + style + '"><h1>' 
-                            + instance.get('label') + '</h1><p>' 
-                            + instance.get('tip') + '</p></div>');
+							templateNode.append('<div class="col-xs-12" style="'
+								+ style + '"><h1>'
+								+ instance.get('label') + '</h1><p>'
+								+ instance.get('tip') + '</p></div>');
 						} else {
 							alert('templatenode is null');
 						}
 					},
 
-					_uiSetTip: function(val) {
+					_uiSetTip: function (val) {
 						var instance = this;
 						var n = instance.get('tipFlagNode');
 						if (instance.tooltip) {
@@ -1817,15 +1829,15 @@ AUI.add(
 						instance._uiSetUsstyle(val);
 					},
 
-					_uiSetLabel: function(val) {
+					_uiSetLabel: function (val) {
 						var instance = this;
 						instance._uiSetUsstyle(val);
 					},
 
-					_uiSetUsid: function(val) {},
-					_uiSetUsistab: function(val) {},
-					_uiSetUsistabcontainer: function(val) {},
-					_uiSetUstabprefix: function(val) {},
+					_uiSetUsid: function (val) { },
+					_uiSetUsistab: function (val) { },
+					_uiSetUsistabcontainer: function (val) { },
+					_uiSetUstabprefix: function (val) { },
 
 				}
 			}
@@ -1851,7 +1863,7 @@ AUI.add(
 		];
 
 		plugins.forEach(
-			function(item, index) {
+			function (item, index) {
 				FormBuilderTypes[item.NAME] = item;
 			}
 		);
