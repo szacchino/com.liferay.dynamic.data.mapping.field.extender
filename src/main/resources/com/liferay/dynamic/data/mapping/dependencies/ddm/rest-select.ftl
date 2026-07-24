@@ -15,6 +15,9 @@
 			<button type="button" class="btn btn-default btn-sm refresh-rest-select-${namespacedFieldName}" title="Refresh" style="margin-top: 5px;">
 				<i class="icon-refresh"></i> Refresh
 			</button>
+			<button type="button" class="btn btn-default btn-sm copy-rest-select-${namespacedFieldName}" title="Copia testo nella clipboard" style="margin-top: 5px; margin-left: 5px;">
+				<i class="icon-copy"></i> Copia
+			</button>
 		</div>
 	</div>
 </@>
@@ -28,6 +31,7 @@
 			function(Y) {
 				var selectNode = Y.one('.${namespacedFieldName}');
 				var refreshBtn = Y.one('.refresh-rest-select-${namespacedFieldName}');
+				var copyBtn = Y.one('.copy-rest-select-${namespacedFieldName}');
 				var rawRestUrl = '${fieldStructure.restUrl}';
 				var rawRestData = {};
 				try {
@@ -77,6 +81,22 @@
 							dom.dispatchEvent(evt);
 						} catch(e) {}
 					}
+				}
+
+				function fallbackCopyText(text) {
+					var textArea = document.createElement("textarea");
+					textArea.value = text;
+					textArea.style.position = "fixed";
+					textArea.style.left = "-9999px";
+					document.body.appendChild(textArea);
+					textArea.focus();
+					textArea.select();
+					try {
+						document.execCommand('copy');
+					} catch (err) {
+						console.error('Fallback copy error', err);
+					}
+					document.body.removeChild(textArea);
 				}
 
 				function getDDMFieldValue(fieldName) {
@@ -396,6 +416,23 @@
 						refreshBtn.on('click', function(e) {
 							e.preventDefault();
 							loadOptions(true);
+						});
+					}
+
+					if (copyBtn) {
+						copyBtn.on('click', function(e) {
+							e.preventDefault();
+							var valToCopy = getDDMFieldValueProp('${namespacedFieldName}', 'value');
+							if (!valToCopy && selectNode && selectNode.getDOMNode()) {
+								valToCopy = selectNode.getDOMNode().value || '';
+							}
+							if (navigator.clipboard && navigator.clipboard.writeText) {
+								navigator.clipboard.writeText(valToCopy).catch(function(err) {
+									fallbackCopyText(valToCopy);
+								});
+							} else {
+								fallbackCopyText(valToCopy);
+							}
 						});
 					}
 
